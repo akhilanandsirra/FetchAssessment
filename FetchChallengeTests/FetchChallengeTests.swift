@@ -9,28 +9,30 @@ import XCTest
 @testable import FetchChallenge
 
 final class FetchChallengeTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+    
+    private let networkingLayer: GenericAPI = NetworkingLayer()
+    
+    private let mealsURL = "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert"
+    private let mealDetailsURL = "https://themealdb.com/api/json/v1/1/lookup.php?i="
+    
+    func testDecodingSampleMeals() throws {
+        _ = try decoder.decode(Meals.self, from: Meal.sampleJSON.data(using: .utf8)!)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testDecodingSampleRecipe() throws {
+        _ = try decoder.decode(Recipe.self, from: Recipe.sampleJSON.data(using: .utf8)!)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testRequestAndDecodeMealsAPI() async throws {
+        let _: Meals = try await networkingLayer.request(mealsURL)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+    
+    func testRequestAndDecodeTestRecipeAPI() async throws {
+        let _: Recipe = try await networkingLayer.request(mealDetailsURL + "53049")
+    }    
 }
