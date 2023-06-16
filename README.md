@@ -17,7 +17,7 @@ The app displays a list of meals in the Dessert category, sorted alphabetically.
 
 1. Clone the Github repository onto your local machine. You can use the command line or a Git client like GitKraken to do this. For example, if you have Git installed on your machine, you can run the following command in your terminal:
 ```[terminal]
-git clone https://github.com/akhilanandsirra/FetchiOSCodingChallenge/
+git clone https://github.com/akhilanandsirra/FetchAssessment/
 ```
 2. Open Xcode and select "Open a project or file" from the startup screen.
 3. Navigate to the folder where you cloned the repository and select the .xcodeproj file.
